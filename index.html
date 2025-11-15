@@ -1,11 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mots croisés — Vacances d'hiver</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+  <div class="container">
+   <h1>Vacances d'Hiver — Mots croisés</h1>
+    <div class="content">
+      <div class="grid-section">
+        <div class="grid" id="crossword"></div>
+        <div class="meta">
+          <p>Progression : <strong id="percent">0%</strong></p>
+          <div class="progress"><i id="bar"></i></div>
+          <p id="status">Mots trouvés : 0 / 7</p>
+          <div class="buttons">
+            <button id="reveal">Afficher la solution</button>
+            <button id="reset" class="ghost">Réinitialiser</button>
+          </div>
+        </div>
+      </div>
+      <div class="clues">
+        <h2>Consignes</h2>
+        <ol>
+          <li>Trouve les 7 mots cachés dans la grille.</li>
+          <li>Les mots peuvent être horizontaux ou verticaux.</li>
+          <li>Les lettres sont vérifiées en temps réel.</li>
+          <li>Utilise les flèches du clavier pour te déplacer.</li>
+        </ol>
+        <h3>Indices</h3>
+        <ol>
+          <li>Protège le cou du vent et du froid → <em>ÉCHARPE</em></li>
+          <li>Oiseau qui vit dans le froid → <em>PINGOUIN</em></li>
+          <li>Sport d’hiver sur la neige → <em>SKI</em></li>
+          <li>Tombe du ciel en hiver → <em>NEIGE</em></li>
+          <li>Maison faite de neige → <em>IGLOO</em></li>
+          <li>Protège les mains du froid → <em>GANTS</em></li>
+          <li>Pour ne pas avoir froid à la tête → <em>BONNET</em></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
