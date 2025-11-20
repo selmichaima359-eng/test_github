@@ -248,3 +248,37 @@ button.ghost:hover {
     width: 200px;
   }
 }
+/* Style pour le mode solution */
+.cell.solution {
+    background-color: #e8f5e8 !important;
+    border: 2px solid #4caf50;
+}
+
+.cell.solution input {
+    color: #2e7d32;
+    font-weight: bold;
+    background: transparent;
+}
+
+.word-input-group input.solution {
+    border-color: #4caf50;
+    background-color: #e8f5e8;
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+/* Désactiver les interactions en mode solution */
+.cell.solution {
+    cursor: not-allowed;
+}
+
+.cell.solution input:disabled {
+    cursor: not-allowed;
+}
+
+/* Style pour le bouton désactivé */
+button:disabled {
+    background-color: #cccccc !important;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
