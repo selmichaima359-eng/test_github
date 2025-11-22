@@ -99,3 +99,44 @@ class Crossword {
             }
         }
     }
+     updateCellAppearance(cell, x, y) {
+        const cellKey = `${x},${y}`;
+        const input = cell.querySelector('input');
+        
+        cell.classList.remove('correct', 'incorrect');
+        
+        if (this.userInput[cellKey]) {
+            const expectedLetter = this.grid[y][x].letter;
+            const userLetter = this.userInput[cellKey].toUpperCase();
+            
+            if (userLetter === expectedLetter) {
+                cell.classList.add('correct');
+                this.correctCells.add(cellKey);
+            } else {
+                cell.classList.add('incorrect');
+                this.correctCells.delete(cellKey);
+            }
+        } else {
+            this.correctCells.delete(cellKey);
+        }
+    }
+
+    handleCellInput(x, y, value) {
+        const cellKey = `${x},${y}`;
+        
+        if (value) {
+            this.userInput[cellKey] = value.toUpperCase();
+        } else {
+            delete this.userInput[cellKey];
+        }
+        
+        this.updateCellAppearance(document.querySelector(`[data-x="${x}"][data-y="${y}"]`), x, y);
+        this.updateProgress();
+        this.updateWordInputs();
+        
+        // Auto-focus sur la cellule suivante
+        if (value) {
+            setTimeout(() => this.moveToNextCell(x, y), 10);
+        }
+    }
+
