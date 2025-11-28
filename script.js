@@ -13,6 +13,9 @@ class Crossword {
         
         this.grid = [];
         this.userInput = {};
+        this.startTime = null;
+        this.timerInterval = null;
+        this.elapsedTime = 0;
         
         this.init();
     }
@@ -23,6 +26,7 @@ class Crossword {
         this.renderGrid();
         this.setupEventListeners();
         this.updateProgress();
+        this.startTimer();
     }
 
     createGrid() {
@@ -214,7 +218,30 @@ class Crossword {
         
         document.getElementById('status').textContent = `Mots trouvés : ${foundWords} / ${this.words.length}`;
     }
+        startTimer() {
+        this.startTime = new Date();
+        this.timerInterval = setInterval(() => {
+            this.updateTimer();
+        }, 1000);
+    }
 
+    updateTimer() {
+        const now = new Date();
+        this.elapsedTime = Math.floor((now - this.startTime) / 1000);
+        
+        const minutes = Math.floor(this.elapsedTime / 60);
+        const seconds = this.elapsedTime % 60;
+        
+        document.getElementById('timer').textContent = 
+            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    stopTimer() {
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+        }
+    }
     revealSolution() {
         for (let y = 0; y < this.gridSize; y++) {
             for (let x = 0; x < this.gridSize; x++) {

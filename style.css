@@ -1,6 +1,6 @@
 body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-  background: linear-gradient(180deg, #f7fbff, #eef6ff);
+  background: linear-gradient(180deg, #7ee6c5, #8fb7e5);
   margin: 0;
   padding: 20px;
   display: flex;
@@ -265,4 +265,15 @@ button.ghost:hover {
     background-color: #e8f5e8;
     color: #2e7d32;
     font-weight: bold;
+}
+#timer {<div id="timer">00:00</div>
+    font-size: 24px;
+    font-weight: bold;
+    font-family: monospace;
+    background: #82b2e9;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 10px 0;
 }
