@@ -205,4 +205,114 @@ button.ghost:hover {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+ /* ===== RESPONSIVE DESIGN ===== */
 
+/* Tablettes */
+@media (max-width: 1024px) {
+  .container {
+    max-width: 95%;
+    padding: 15px;
+  }
+  
+  .content {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  
+  .grid {
+    grid-template-columns: repeat(10, 35px);
+    grid-template-rows: repeat(10, 35px);
+  }
+  
+  .clues {
+    order: -1; /* Met les indices en premier */
+  }
+}
+
+/* Smartphones */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  
+  h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+  
+  .container {
+    max-width: 100%;
+  }
+  
+  .grid {
+    grid-template-columns: repeat(10, 30px);
+    grid-template-rows: repeat(10, 30px);
+    gap: 2px;
+    padding: 4px;
+  }
+  
+  .cell {
+    font-size: 14px;
+  }
+  
+  .cell input {
+    font-size: 14px;
+  }
+  
+  .clues {
+    padding: 20px;
+  }
+  
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  button {
+    width: 100%;
+    max-width: 250px;
+    margin-bottom: 10px;
+  }
+  
+  #timer {
+    font-size: 24px;
+    padding: 10px 15px;
+  }
+}
+
+/* Très petits écrans */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 28px;
+  }
+  
+  .grid {
+    grid-template-columns: repeat(10, 25px);
+    grid-template-rows: repeat(10, 25px);
+  }
+  
+  .cell {
+    font-size: 12px;
+  }
+  
+  .cell input {
+    font-size: 12px;
+  }
+  
+  .clues {
+    padding: 15px;
+  }
+  
+  .clues ol {
+    padding-left: 20px;
+  }
+  
+  #timer {
+    font-size: 20px;
+    padding: 8px 12px;
+  }
+  
+  .progress {
+    height: 18px;
+  }
+}
