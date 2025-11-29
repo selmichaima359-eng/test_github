@@ -1,8 +1,9 @@
 class Crossword {
     constructor() {
+        // Configuration de base de la grille
         this.gridSize = 10;
-        this.words = [
-            { word: "ÉCHARPE", clue: "Je sers à protéger le cou du vent et du froid", x: 1, y: 0, direction: "down" },
+        this.words = [ // Liste des mots avec leurs propriétés
+            { word: "SLIDING", clue: "Activité de glisse pratiquée en hiver sur la neige ou la glace en anglais", x: 1, y: 0, direction: "down" },
             { word: "PINGOUIN", clue: "Je suis un oiseau qui vit dans le froid", x: 0, y: 2, direction: "across" },
             { word: "SKI", clue: "Sport d'hiver pratiqué sur la neige", x: 6, y: 0, direction: "down" },
             { word: "NEIGE", clue: "Je tombe du ciel en hiver", x: 3, y: 4, direction: "across" },
@@ -10,15 +11,15 @@ class Crossword {
             { word: "GANTS", clue: "On m'utilise pour protéger les mains du froid", x: 5, y: 8, direction: "across" },
             { word: "BONNET", clue: "On le met sur la tête pour ne pas avoir froid", x: 8, y: 3, direction: "down" }
         ];
+        // Initialisation des variables d'état
+        this.grid = []; // Grille de jeu
+        this.userInput = {}; // Stocke les réponses de l'utilisateur
+        this.activeInput = null; // Case actuellement sélectionnée
+        this.startTime = null; // Heure de début du jeu
+        this.timerInterval = null; // Intervalle du timer
+        this.elapsedTime = 0; // Temps écoulé en secondes
 
-        this.grid = [];
-        this.userInput = {};
-        this.activeInput = null; 
-        this.startTime = null;
-        this.timerInterval = null;
-        this.elapsedTime = 0;
-
-        this.init();
+        this.init();  // Lancement de l'initialisation
     }
 
     init() {
@@ -29,7 +30,7 @@ class Crossword {
         this.updateProgress();
         this.startTimer();
     }
-
+     // Création d'une grille vide
     createGrid() {
         this.grid = [];
         for (let y = 0; y < this.gridSize; y++) {
@@ -44,8 +45,10 @@ class Crossword {
         }
     }
 
+     // Placement des mots dans la grille
     placeWords() {
         for (let y = 0; y < this.gridSize; y++) {
+             // Réinitialisation de toutes les cases
             for (let x = 0; x < this.gridSize; x++) {
                 this.grid[y][x].blocked = true;
                 this.grid[y][x].letter = '';
@@ -71,7 +74,7 @@ class Crossword {
             wordNumber++;
         });
     }
-
+     // Affichage de la grille dans le DOM
     renderGrid() {
         const gridElement = document.getElementById('crossword');
         gridElement.innerHTML = '';
@@ -117,7 +120,7 @@ class Crossword {
             }
         }
     }
-
+  // Mise à jour de l'apparence d'une case (correct/incorrect)
     updateCellAppearance(cell, x, y) {
         const cellKey = `${x},${y}`;
         cell.classList.remove('correct', 'incorrect');
@@ -133,7 +136,7 @@ class Crossword {
             }
         }
     }
-
+ // Gestion de la saisie dans une case
     handleCellInput(x, y, value) {
         const cellKey = `${x},${y}`;
 
@@ -149,7 +152,7 @@ class Crossword {
 
         this.focusNextCell(x, y); 
     }
-
+   // Gestion de la navigation au clavier
     handleKeyNavigation(e, x, y) {
         if (e.key === "ArrowRight") this.moveFocus(x + 1, y);
         if (e.key === "ArrowLeft") this.moveFocus(x - 1, y);
@@ -163,7 +166,7 @@ class Crossword {
             this.updateProgress();
         }
     }
-
+ // Focus sur la case suivante
     focusNextCell(x, y) {
         this.moveFocus(x + 1, y);
     }
@@ -181,31 +184,6 @@ class Crossword {
             setTimeout(() => input.focus(), 10);
         }
     }
-
-    updateProgress() {
-        let correct = 0;
-        let total = 0;
-
-        for (let y = 0; y < this.gridSize; y++) {
-            for (let x = 0; x < this.gridSize; x++) {
-                if (!this.grid[y][x].blocked) {
-                    total++;
-                    const cellKey = `${x},${y}`;
-
-                    const expected = this.grid[y][x].letter.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                    const user = this.userInput[cellKey]?.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-                    if (expected === user) correct++;
-                }
-            }
-        }
-
-        const progress = total ? (correct / total) * 100 : 0;
-
-        document.getElementById('percent').textContent = `${Math.round(progress)}%`;
-        document.getElementById('bar').style.width = `${progress}%`;
-    }
-
     startTimer() {
         this.startTime = new Date();
         this.timerInterval = setInterval(() => {
@@ -213,17 +191,55 @@ class Crossword {
         }, 1000);
     }
 
-    updateTimer() {
-        const now = new Date();
-        this.elapsedTime = Math.floor((now - this.startTime) / 1000);
-        
-        const minutes = Math.floor(this.elapsedTime / 60);
-        const seconds = this.elapsedTime % 60;
-        
-        document.getElementById('timer').textContent =
-            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    updateProgress() {
+    let correct = 0;
+    let total = 0;
+    let wordsFound = 0;
+
+    // Compter les lettres correctes
+    for (let y = 0; y < this.gridSize; y++) {
+        for (let x = 0; x < this.gridSize; x++) {
+            if (!this.grid[y][x].blocked) {
+                total++;
+                const cellKey = `${x},${y}`;
+                const expected = this.grid[y][x].letter.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const user = this.userInput[cellKey]?.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+                if (expected === user) {
+                    correct++;
+                }
+            }
+        }
     }
 
+    // Vérifier chaque mot pour voir s'il est complet
+    this.words.forEach(wordObj => {
+        const { word, x, y, direction } = wordObj;
+        let wordComplete = true;
+
+        for (let i = 0; i < word.length; i++) {
+            const currentX = direction === "across" ? x + i : x;
+            const currentY = direction === "down" ? y + i : y;
+            const cellKey = `${currentX},${currentY}`;
+            
+            const expected = this.grid[currentY][currentX].letter.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const user = this.userInput[cellKey]?.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+            if (expected !== user) {
+                wordComplete = false;
+                break;
+            }
+        }
+
+        if (wordComplete) wordsFound++;
+    });
+
+    const progress = total ? (correct / total) * 100 : 0;
+
+    document.getElementById('percent').textContent = `${Math.round(progress)}%`;
+    document.getElementById('bar').style.width = `${progress}%`;
+    document.getElementById('status').textContent = `Mots trouvés : ${wordsFound} / 7`;
+}
     revealSolution() {
         for (let y = 0; y < this.gridSize; y++) {
             for (let x = 0; x < this.gridSize; x++) {
@@ -235,9 +251,31 @@ class Crossword {
         this.renderGrid();
         this.updateProgress();
     }
+    updateTimer() {
+    const now = new Date();
+    this.elapsedTime = Math.floor((now - this.startTime) / 1000);
+    
+    const minutes = Math.floor(this.elapsedTime / 60);
+    const seconds = this.elapsedTime % 60;
+    
+    document.getElementById('timer').textContent =
+        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
 
-    reset() {
+        reset() {
+        // Réinitialiser les réponses
         this.userInput = {};
+        
+        // Réinitialiser et redémarrer le timer
+        clearInterval(this.timerInterval);
+        this.startTime = new Date();
+        this.elapsedTime = 0;
+        document.getElementById('timer').textContent = '00:00';
+        this.timerInterval = setInterval(() => {
+            this.updateTimer();
+        }, 1000);
+        
+        // Mettre à jour l'affichage
         this.renderGrid();
         this.updateProgress();
     }
@@ -246,7 +284,7 @@ class Crossword {
         document.getElementById('reveal').addEventListener('click', () => this.revealSolution());
         document.getElementById('reset').addEventListener('click', () => this.reset());
     }
-}
+} 
 
 document.addEventListener('DOMContentLoaded', () => {
     new Crossword();
