@@ -52,7 +52,6 @@ Un jeu de mots croisés interactif et élégant sur le thème des vacances d'hiv
 ## 🆕 Nouveautés Explorées
 
 ### 💡 Découvertes Techniques Avancées
-- **Programmation Orientée Objet (POO)** avec classes ES6
 - **Gestion d'état complexe** pour une application interactive
 - **Manipulation dynamique du DOM** avec création d'éléments en temps réel
 - **Architecture modulaire** avec séparation des responsabilités
